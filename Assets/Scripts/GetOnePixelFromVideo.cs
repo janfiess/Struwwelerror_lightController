@@ -1,0 +1,110 @@
+﻿// attached to the AnimPlayer Gameobject
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Video;
+using UnityEngine.UI;
+
+public class GetOnePixelFromVideo : MonoBehaviour {
+	public VideoClip videoToPlay1, videoToPlay2;
+    VideoClip videoToPlay;
+	private Color targetColor;
+    private VideoPlayer videoPlayer;
+    private VideoSource videoSource;
+    private Renderer rend;
+	public GameObject textureToRender;
+    private Texture tex;
+    private AudioSource audioSource;
+    public Image UI_light;
+	Texture2D videoFrame;
+    public Dmx_Configurator dmxConfigurator;
+
+
+
+	void Start()
+    {
+        videoToPlay = videoToPlay1;
+        videoFrame = new Texture2D(2, 2);
+        Application.runInBackground = true;
+
+        videoPlayer = GetComponent<VideoPlayer>();
+        videoPlayer.source = VideoSource.VideoClip;
+        videoPlayer.clip = videoToPlay;
+        videoPlayer.Prepare();
+
+        StartCoroutine(PrepareVideo());
+
+		rend = textureToRender.GetComponent<Renderer>();
+
+               //Enable new frame Event
+        videoPlayer.sendFrameReadyEvents = true;
+
+        //Subscribe to the new frame Event
+        videoPlayer.frameReady += OnNewFrame;
+
+        //Play Video
+        videoPlayer.Play();
+    }
+
+	IEnumerator PrepareVideo()
+    {
+        //Wait until video is prepared
+        while (!videoPlayer.isPrepared)
+        {
+            Debug.Log("Preparing Video");
+            yield return null;
+        }
+        Debug.Log("Done Preparing Video");
+
+        //Assign the Texture from Video to Material texture
+        tex = videoPlayer.texture;
+		// image.texture = videoPlayer.texture;
+        rend.material.mainTexture = tex; 
+    }
+
+    
+
+    void OnNewFrame(VideoPlayer source, long frameIdx)
+    {
+        RenderTexture renderTexture = source.texture as RenderTexture;
+
+        if (videoFrame.width != renderTexture.width || videoFrame.height != renderTexture.height)
+        {
+            videoFrame.Resize(renderTexture.width, renderTexture.height);
+        }
+        RenderTexture.active = renderTexture;
+        videoFrame.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+        videoFrame.Apply();
+        RenderTexture.active = null;
+
+        var pixelColor = videoFrame.GetPixel(Mathf.FloorToInt(5),Mathf.FloorToInt(2));
+        var lightIntensity = pixelColor.r;
+
+        // send value to light and to a UI-Light (Image) in Dmx_Configurator.cs
+
+        Color debugLightColor = new Color(
+            (float)lightIntensity * 1, 
+            (float)lightIntensity * 1, 
+            (float)lightIntensity * 1, 
+            1);
+        UI_light.color = debugLightColor; 
+
+        dmxConfigurator.color_skypanel1 = debugLightColor;
+        dmxConfigurator.color_skypanel2 = debugLightColor;
+        dmxConfigurator.color_stripe = debugLightColor; 		
+    }
+
+	public void btn_Anim9(VideoClip videoClip){
+		print("huhu anim 9");
+		videoPlayer.clip = videoClip;
+        StartCoroutine(PrepareVideo());
+        videoPlayer.Play();
+	}
+	public void btn_Anim10(VideoClip videoClip){
+		print("huhu anim 10");
+		videoPlayer.clip = videoClip;
+        StartCoroutine(PrepareVideo());
+        videoPlayer.Play();
+	}
+}
