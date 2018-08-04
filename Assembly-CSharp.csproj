@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{32CA3E7B-F585-A3E4-6D49-E09E7D4D84C9}</ProjectGuid>
+    <ProjectGuid>{D6716124-3FB2-E313-4889-15D119C2E7FF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -57,10 +57,10 @@
      <Compile Include="Assets\Scripts\GetOnePixelFromVideo.cs" />
      <Compile Include="Assets\Scripts\MenuManager.cs" />
  <Reference Include="UnityEditor.StandardEvents">
- <HintPath>/Users/janfiess/Documents/Github/struwwelerror/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+ <HintPath>/Users/janfiess/Documents/Github/Struwwelerror_lightController/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="Unity.PackageManagerUI.Editor">
- <HintPath>/Users/janfiess/Documents/Github/struwwelerror/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+ <HintPath>/Users/janfiess/Documents/Github/Struwwelerror_lightController/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>/Applications/Unity_201801/Unity_201801.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -252,10 +252,10 @@
  <HintPath>/Applications/Unity_201801/Unity_201801.app/Contents/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
  <Reference Include="ArtNet">
- <HintPath>/Users/janfiess/Documents/Github/struwwelerror/Assets/Plugins/ArtNetlib/ArtNet.dll</HintPath>
+ <HintPath>/Users/janfiess/Documents/Github/Struwwelerror_lightController/Assets/Plugins/ArtNetlib/ArtNet.dll</HintPath>
  </Reference>
  <Reference Include="Liteshared">
- <HintPath>/Users/janfiess/Documents/Github/struwwelerror/Assets/Plugins/ArtNetlib/Liteshared.dll</HintPath>
+ <HintPath>/Users/janfiess/Documents/Github/Struwwelerror_lightController/Assets/Plugins/ArtNetlib/Liteshared.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Users/janfiess/Library/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>

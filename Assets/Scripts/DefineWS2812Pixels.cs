@@ -1,4 +1,4 @@
-﻿// script attached to Canvas/Panel_Header/UI-Lights/Lichterkette/Pixel
+﻿// script attached to the Manager GameObject
 // defining colors of WS2812 pixels
 
 using System.Collections;
@@ -9,21 +9,24 @@ using UnityEngine.UI;
 public class DefineWS2812Pixels : MonoBehaviour {
     int debugLights_count;
 	public Dmx_Configurator dmxConfigurator;
-	int dmxStartAddress = 15;
-	FadingShapes fadingShapes;
-	public Toggle graph_linear, graph_gammaCorrection, graph_linearSteepStart;
-  
-	public delegate byte FadingShape(float x);
-    FadingShape fadingShape_function;
+	int dmxStartAddress = 5;
 	private IEnumerator coroutine_AnimateShapeSlider;
+	public Transform lichterkette_pixels;
+	public RawImage imageToAnalyse;
+	public Texture imgTexture1, imgTexture2;
 	
+
+
+
+
+
+
+
 
 
    
 	public Slider slider;
-    float prev_sliderVal;
-
-
+    // float prev_sliderVal;
 
 
 	public Slider speedslider;
@@ -33,48 +36,92 @@ public class DefineWS2812Pixels : MonoBehaviour {
 
 
 	void Start () {
-		debugLights_count = transform.childCount;
-		fadingShapes = GetComponent<FadingShapes>();
+		imageToAnalyse.texture = imgTexture1;
+		// print("Image to analyse: " + imageToAnalyse.texture.width);
+		debugLights_count = lichterkette_pixels.childCount;
+		lichterkette_pixels.GetChild(1).GetComponent<Image>().color = Color.green;   	
 	}
 	
 	void Update () {
 
-		float sliderVal = slider.value * 1.8f; // adapt slider
-        prev_sliderVal = sliderVal;
+		float sliderVal = slider.value; // adapt slider
+        // prev_sliderVal = sliderVal;
 
 
 
-		// specify the fading function (fadingShape_function) depending on the selected radio button)
-        if (graph_linear.isOn) fadingShape_function = fadingShapes.Linear;
-        else if (graph_gammaCorrection.isOn) fadingShape_function = fadingShapes.GammaCorrection;
-		else if (graph_linearSteepStart.isOn) fadingShape_function = fadingShapes.LinearSteepStart;
 		
+
+		Texture2D imgTexture = (imageToAnalyse.texture as Texture2D);
+
+		// for each light
+		for (int i = lichterkette_pixels.GetComponent<Transform>().childCount-1; i >= 0; i--)
+        {
+			var pixelColor = imgTexture.GetPixel(Mathf.FloorToInt(i*10 + 5),Mathf.FloorToInt(2));
+			var lightIntensity = pixelColor.r;
+			print( i + ": " + lightIntensity + " (GetMultiplePixelsFromImage");
+
+
+            // send value to light
+            dmxConfigurator.DMXData[dmxStartAddress + 3 * i] = (byte)(lightIntensity * masterfader.value * redfader.value * 255);
+			dmxConfigurator.DMXData[dmxStartAddress + 3 * i + 1] = (byte)(lightIntensity * masterfader.value * greenfader.value * 255);
+			dmxConfigurator.DMXData[dmxStartAddress + 3 * i + 2] = (byte)(lightIntensity * masterfader.value * bluefader.value * 255);
+
+            // send value to software light
+            Color debugLightColor = new Color(
+				(float)lightIntensity * redfader.value, 
+				(float)lightIntensity * greenfader.value, 
+				(float)lightIntensity * bluefader.value, 
+				masterfader.value);
+
+
+
+
+
+			lichterkette_pixels.GetComponent<Transform>().GetChild(i).GetComponent<Image>().color = debugLightColor;   
+		}
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		// for each light
         // for (int i = 0; i < debugLights_count; i++)
 
-		for (int i = debugLights_count-1; i >= 0; i--)
-        {
-            // execute the fading function fadingShape_function
-            byte y = fadingShape_function(sliderVal-0.025f *i);
-		
+		// for (int i = debugLights_count-1; i >= 0; i--)
+        // {
+        //    float y = 1;
 
-            // print("y-Value: " + y);
+        //     // send value to light
+        //     dmxConfigurator.DMXData[dmxStartAddress + 3 * i] = (byte)(y * masterfader.value * redfader.value);
+		// 	dmxConfigurator.DMXData[dmxStartAddress + 3 * i + 1] = (byte)(y * masterfader.value * greenfader.value);
+		// 	dmxConfigurator.DMXData[dmxStartAddress + 3 * i + 2] = (byte)(y * masterfader.value * bluefader.value);
 
-            // send value to light
-            dmxConfigurator.DMXData[dmxStartAddress + 3 * i] = (byte)(y * masterfader.value * redfader.value);
-			dmxConfigurator.DMXData[dmxStartAddress + 3 * i + 1] = (byte)(y * masterfader.value * greenfader.value);
-			dmxConfigurator.DMXData[dmxStartAddress + 3 * i + 2] = (byte)(y * masterfader.value * bluefader.value);
+        //     // send value to software light
+        //     Color debugLightColor = new Color(
+		// 		(float)y * redfader.value / 255.0f, 
+		// 		(float)y * greenfader.value / 255.0f, 
+		// 		(float)y * bluefader.value / 255.0f, 
+		// 		masterfader.value);
 
-            // send value to software light
-            Color debugLightColor = new Color(
-				(float)y * redfader.value / 255.0f, 
-				(float)y * greenfader.value / 255.0f, 
-				(float)y * bluefader.value / 255.0f, 
-				masterfader.value);
-
-			transform.GetChild(i).GetComponent<Image>().color = debugLightColor;   
-		}		
+		// 	// lichterkette_pixels.transform.GetChild(i).GetComponent<Image>().color = debugLightColor;  
+		// }		
 	}
 
 	// UI Button
@@ -104,5 +151,17 @@ public class DefineWS2812Pixels : MonoBehaviour {
             yield return null;
         }
 
+	}
+
+	public void Btn_GetShape1(Texture imgTexture){
+		print("hit Btn_GetShape1");
+		imageToAnalyse.texture = imgTexture;
+		print("Image to analyse: " + imageToAnalyse.texture.width);
+	}
+
+	public void Btn_GetShape2(Texture imgTexture){
+		print("hit Btn_GetShape2");
+		imageToAnalyse.texture = imgTexture;
+		print("Image to analyse: " + imageToAnalyse.texture.width);
 	}
 }

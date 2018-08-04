@@ -26,7 +26,7 @@ public class Dmx_Configurator : MonoBehaviour
 	public Color color_skypanel1;
 	public GameObject softwareLight_skypanel1_gui;
 	public Slider masterfader_skypanel1_ui;
-	int port_led_skypanel1 = 5; // DMX Channel - 1
+	int port_led_skypanel1 = 15; // DMX Channel - 1
 	Color prevLed_skypanel1_Color;
 
 
