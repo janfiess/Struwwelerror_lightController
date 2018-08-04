@@ -13,7 +13,9 @@ public class DefineWS2812Pixels : MonoBehaviour {
 	private IEnumerator coroutine_AnimateShapeSlider;
 	public Transform lichterkette_pixels;
 	public RawImage imageToAnalyse;
-	public Texture imgTexture1, imgTexture2;
+	// public Texture imgTexture1, imgTexture2;
+	int textureWidth;
+	int uiLights_count;
 	
 
 
@@ -36,10 +38,12 @@ public class DefineWS2812Pixels : MonoBehaviour {
 
 
 	void Start () {
-		imageToAnalyse.texture = imgTexture1;
-		// print("Image to analyse: " + imageToAnalyse.texture.width);
+		// imageToAnalyse.texture = imgTexture1;
+		print("imageToAnalyse.texture.width: " + imageToAnalyse.texture.width);
 		debugLights_count = lichterkette_pixels.childCount;
-		lichterkette_pixels.GetChild(1).GetComponent<Image>().color = Color.green;   	
+		uiLights_count = lichterkette_pixels.GetComponent<Transform>().childCount;
+		print("uiLights_count: " + uiLights_count);
+		// lichterkette_pixels.GetChild(1).GetComponent<Image>().color = Color.green;   	
 	}
 	
 	void Update () {
@@ -54,11 +58,13 @@ public class DefineWS2812Pixels : MonoBehaviour {
 		Texture2D imgTexture = (imageToAnalyse.texture as Texture2D);
 
 		// for each light
-		for (int i = lichterkette_pixels.GetComponent<Transform>().childCount-1; i >= 0; i--)
+		for (int i = uiLights_count - 1; i >= 0; i--)
         {
-			var pixelColor = imgTexture.GetPixel(Mathf.FloorToInt(i*10 + 5),Mathf.FloorToInt(2));
+			                		// 5f: 10px pro led, 5 ist die Mitte, 
+									// slider.value: range [o..1]
+			var pixelColor = imgTexture.GetPixel(Mathf.FloorToInt(( 5f - slider.value*40f * 10f +  i * 10f) % 400f),Mathf.FloorToInt(2));
 			var lightIntensity = pixelColor.r;
-			print( i + ": " + lightIntensity + " (GetMultiplePixelsFromImage");
+			// print( i + ": " + lightIntensity + " (GetMultiplePixelsFromImage");
 
 
             // send value to light
@@ -156,12 +162,14 @@ public class DefineWS2812Pixels : MonoBehaviour {
 	public void Btn_GetShape1(Texture imgTexture){
 		print("hit Btn_GetShape1");
 		imageToAnalyse.texture = imgTexture;
-		print("Image to analyse: " + imageToAnalyse.texture.width);
+		textureWidth = imageToAnalyse.texture.width;
+		print("texture width: " + textureWidth);
 	}
 
 	public void Btn_GetShape2(Texture imgTexture){
 		print("hit Btn_GetShape2");
 		imageToAnalyse.texture = imgTexture;
-		print("Image to analyse: " + imageToAnalyse.texture.width);
+		textureWidth = imageToAnalyse.texture.width;
+		print("texture width: " + textureWidth);
 	}
 }
