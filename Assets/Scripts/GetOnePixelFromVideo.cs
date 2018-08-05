@@ -101,7 +101,8 @@ public class GetOnePixelFromVideo : MonoBehaviour {
 
         dmxConfigurator.color_skypanel1 = debugLightColor;
         dmxConfigurator.color_skypanel2 = debugLightColor;
-        dmxConfigurator.color_stripe = debugLightColor; 		
+        dmxConfigurator.color_stripe = debugLightColor; 
+        dmxConfigurator.color_toilette = debugLightColor;		
     }
 
 	public void btn_Anim(int pos){

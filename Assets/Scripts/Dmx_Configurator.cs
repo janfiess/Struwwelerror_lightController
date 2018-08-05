@@ -49,21 +49,21 @@ public class Dmx_Configurator : MonoBehaviour
 	Color prevLed_stripe_Color;
 
 
-	// LEDs Lichterkette_kinderzimmer
+	// LEDs Lichterkette_kinderzimmer // DMX in DefineWS2812Pixels.cs
 	public Color color_lichterkette;
-	public GameObject softwareLight_lichterkette_gui;
+	// public GameObject softwareLight_lichterkette_gui;
 	float masterfader_lichterkette;
 	public Slider masterfader_lichterkette_ui;
-	int port_led_lichterkette = 11;            // DMX 9 -> // DMX Channel - 1
+	// int port_led_lichterkette = 11;            // DMX 9 -> // DMX Channel - 1
 	Color prevLed_lichterkette_Color;
 
 
-	// LEDs Toilette
+	// LEDs Toilette -> OSC in OSC_sender.cs
 	public Color color_toilette;
 	public GameObject softwareLight_toilette_gui;
 	float masterfader_toilette;
 	public Slider masterfader_toilette_ui;
-	int port_led_toilette = 12;            // DMX 13 -> // DMX Channel - 1
+	// int port_led_toilette = 12;            // DMX 13 -> // DMX Channel - 1
 	Color prevLed_toilette_Color;
 
 
@@ -202,8 +202,9 @@ public class Dmx_Configurator : MonoBehaviour
 		}
 
 
+		// OSC in OSC_Sender.cs
 		if (color_toilette != prevLed_toilette_Color) {
-			DMXData[port_led_toilette] = (byte)(color_toilette.r * masterfader_toilette_ui.value * 255);
+			// DMXData[port_led_toilette] = (byte)(color_toilette.r * masterfader_toilette_ui.value * 255);
 
 			// see color also on an UI element in scene
 			softwareLight_toilette_gui.GetComponent<Image>().color = new Color(
