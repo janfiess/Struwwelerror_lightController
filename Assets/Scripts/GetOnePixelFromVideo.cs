@@ -7,7 +7,7 @@ using UnityEngine.Video;
 using UnityEngine.UI;
 
 public class GetOnePixelFromVideo : MonoBehaviour {
-	public VideoClip videoToPlay1, videoToPlay2;
+	public VideoClip videoToPlay1;
     VideoClip videoToPlay;
 	private Color targetColor;
     private VideoPlayer videoPlayer;
@@ -19,10 +19,11 @@ public class GetOnePixelFromVideo : MonoBehaviour {
     public Image UI_light;
 	Texture2D videoFrame;
     public Dmx_Configurator dmxConfigurator;
+    public VideoClip [] videoclips;
 
 
 
-	void Start()
+	void OnEnable()
     {
         videoToPlay = videoToPlay1;
         videoFrame = new Texture2D(2, 2);
@@ -47,6 +48,11 @@ public class GetOnePixelFromVideo : MonoBehaviour {
         videoPlayer.Play();
     }
 
+    // void Start(){
+
+    //     btn_Anim(0);
+    // }
+
 	IEnumerator PrepareVideo()
     {
         //Wait until video is prepared
@@ -61,6 +67,9 @@ public class GetOnePixelFromVideo : MonoBehaviour {
         tex = videoPlayer.texture;
 		// image.texture = videoPlayer.texture;
         rend.material.mainTexture = tex; 
+
+
+        // btn_Anim(0); // white
     }
 
     
@@ -95,15 +104,9 @@ public class GetOnePixelFromVideo : MonoBehaviour {
         dmxConfigurator.color_stripe = debugLightColor; 		
     }
 
-	public void btn_Anim9(VideoClip videoClip){
-		print("huhu anim 9");
-		videoPlayer.clip = videoClip;
-        StartCoroutine(PrepareVideo());
-        videoPlayer.Play();
-	}
-	public void btn_Anim10(VideoClip videoClip){
-		print("huhu anim 10");
-		videoPlayer.clip = videoClip;
+	public void btn_Anim(int pos){
+		// print("huhu anim");
+		videoPlayer.clip = videoclips[pos];
         StartCoroutine(PrepareVideo());
         videoPlayer.Play();
 	}
