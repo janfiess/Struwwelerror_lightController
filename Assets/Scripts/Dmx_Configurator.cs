@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using ArtNet;
 using UnityEngine.UI;
 
+
 public class Dmx_Configurator : MonoBehaviour
 {
     public byte[] DMXData = new byte[512];
@@ -19,7 +20,7 @@ public class Dmx_Configurator : MonoBehaviour
 
     ArtNet.Engine ArtEngine;
 	// Animator animator;
-	float animSmoother = 6f; // lower value: slower and smoother
+	// float animSmoother = 6f; // lower value: slower and smoother
 
 	// Skypanel 1
 	// public Light softwareLight_skypanel1; // this color will be transmitted to LED 1 (and 2)
@@ -33,7 +34,7 @@ public class Dmx_Configurator : MonoBehaviour
 	// Skypanel 2
 	public Color color_skypanel2;
 	public GameObject softwareLight_skypanel2_gui;
-	float masterfader_skypanel2 = 1;
+	// float masterfader_skypanel2 = 1;
 	public Slider masterfader_skypanel2_ui;
 	int port_led_skypanel2 = 15;            // DMX 16 -> // DMX Channel - 1
 	Color prevLed_skypanel2_Color;
@@ -43,27 +44,27 @@ public class Dmx_Configurator : MonoBehaviour
 	// LED stripe wohnzimmer
 	public Color color_stripe; 
 	public GameObject softwareLight_stripe_gui;
-	float masterfader_stripe;
+	// float masterfader_stripe;
 	public Slider masterfader_stripe_ui;
 	int port_led_stripe = 0;            // DMX 1 -> // DMX Channel - 1
 	Color prevLed_stripe_Color;
 
 
 	// LEDs Lichterkette_kinderzimmer // DMX in DefineWS2812Pixels.cs
-	public Color color_lichterkette;
+	// public Color color_lichterkette;
 	// public GameObject softwareLight_lichterkette_gui;
-	float masterfader_lichterkette;
+	// float masterfader_lichterkette;
 	public Slider masterfader_lichterkette_ui;
-	[HideInInspector] public int dmxStartAddress_lichterkette = 25;            // DMX 26 -> // DMX Channel - 1
-	Color prevLed_lichterkette_Color;
+	[HideInInspector] public int dmxStartAddress_lichterkette = 4;            // DMX 26 -> // DMX Channel - 1
+	// Color prevLed_lichterkette_Color;
 
 
 	// LEDs Toilette -> OSC in OSC_sender.cs
-	public Color color_toilette;
-	public GameObject softwareLight_toilette_gui;
-	float masterfader_toilette;
-	public Slider masterfader_toilette_ui;
-	Color prevLed_toilette_Color;
+	// public Color color_toilette;
+	// public GameObject softwareLight_toilette_gui;
+	// // float masterfader_toilette;
+	// public Slider masterfader_toilette_ui;
+	// Color prevLed_toilette_Color;
 
 
 
@@ -117,14 +118,14 @@ public class Dmx_Configurator : MonoBehaviour
 	}
 
 	// called via GUI Button
-	public void Toilette_toggle(){
-		if (masterfader_toilette_ui.value <= 0.5f){
-			StartCoroutine(SmoothValue(masterfader_toilette_ui, 1f));
-		} 
-		else if (masterfader_toilette_ui.value > 0.5f){
-			StartCoroutine(SmoothValue(masterfader_toilette_ui, 0f));
-		} 
-	}
+	// public void Toilette_toggle(){
+	// 	if (masterfader_toilette_ui.value <= 0.5f){
+	// 		StartCoroutine(SmoothValue(masterfader_toilette_ui, 1f));
+	// 	} 
+	// 	else if (masterfader_toilette_ui.value > 0.5f){
+	// 		StartCoroutine(SmoothValue(masterfader_toilette_ui, 0f));
+	// 	} 
+	// }
 
 	// called via GUI Button
 	public void Lichterkette_toggle(){
@@ -202,18 +203,18 @@ public class Dmx_Configurator : MonoBehaviour
 
 
 		// OSC in OSC_Sender.cs
-		if (color_toilette != prevLed_toilette_Color) {
-			// DMXData[port_led_toilette] = (byte)(color_toilette.r * masterfader_toilette_ui.value * 255);
+		// if (color_toilette != prevLed_toilette_Color) {
+		// 	// DMXData[port_led_toilette] = (byte)(color_toilette.r * masterfader_toilette_ui.value * 255);
 
-			// see color also on an UI element in scene
-			softwareLight_toilette_gui.GetComponent<Image>().color = new Color(
-				color_toilette.r, 
-				color_toilette.r, 
-				color_toilette.r, 
-				masterfader_toilette_ui.value);
+		// 	// see color also on an UI element in scene
+		// 	softwareLight_toilette_gui.GetComponent<Image>().color = new Color(
+		// 		color_toilette.r, 
+		// 		color_toilette.r, 
+		// 		color_toilette.r, 
+		// 		masterfader_toilette_ui.value);
 			
-			prevLed_toilette_Color = color_toilette;
-		}
+		// 	prevLed_toilette_Color = color_toilette;
+		// }
 
 		// Settings für Lichterkette in DefineWS2812Pixels.cs -> Canvas/Panel_Header/UI-Lights/Lichterkette/Pixel
 

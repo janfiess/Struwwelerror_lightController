@@ -69,7 +69,7 @@ public class DefineWS2812Pixels : MonoBehaviour {
 		// if(sliderVal == prev_sliderVal) return;
 
 		currentTime = Time.time;
-		if((currentTime - prevTime)< 0.3f) return;
+		if((currentTime - prevTime)< 0.1f) return;
 		prevTime = Time.time;
 
 		
