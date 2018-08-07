@@ -26,7 +26,7 @@ public class Dmx_Configurator : MonoBehaviour
 	public Color color_skypanel1;
 	public GameObject softwareLight_skypanel1_gui;
 	public Slider masterfader_skypanel1_ui;
-	int port_led_skypanel1 = 15; // DMX Channel - 1
+	int port_led_skypanel1 = 5; // DMX Channel - 1 (DMX6)
 	Color prevLed_skypanel1_Color;
 
 
@@ -35,7 +35,7 @@ public class Dmx_Configurator : MonoBehaviour
 	public GameObject softwareLight_skypanel2_gui;
 	float masterfader_skypanel2 = 1;
 	public Slider masterfader_skypanel2_ui;
-	int port_led_skypanel2 = 9;            // DMX 7 -> // DMX Channel - 1
+	int port_led_skypanel2 = 15;            // DMX 16 -> // DMX Channel - 1
 	Color prevLed_skypanel2_Color;
 
 
@@ -45,7 +45,7 @@ public class Dmx_Configurator : MonoBehaviour
 	public GameObject softwareLight_stripe_gui;
 	float masterfader_stripe;
 	public Slider masterfader_stripe_ui;
-	int port_led_stripe = 10;            // DMX 8 -> // DMX Channel - 1
+	int port_led_stripe = 0;            // DMX 1 -> // DMX Channel - 1
 	Color prevLed_stripe_Color;
 
 
@@ -54,7 +54,7 @@ public class Dmx_Configurator : MonoBehaviour
 	// public GameObject softwareLight_lichterkette_gui;
 	float masterfader_lichterkette;
 	public Slider masterfader_lichterkette_ui;
-	// int port_led_lichterkette = 11;            // DMX 9 -> // DMX Channel - 1
+	[HideInInspector] public int dmxStartAddress_lichterkette = 25;            // DMX 26 -> // DMX Channel - 1
 	Color prevLed_lichterkette_Color;
 
 
@@ -63,7 +63,6 @@ public class Dmx_Configurator : MonoBehaviour
 	public GameObject softwareLight_toilette_gui;
 	float masterfader_toilette;
 	public Slider masterfader_toilette_ui;
-	// int port_led_toilette = 12;            // DMX 13 -> // DMX Channel - 1
 	Color prevLed_toilette_Color;
 
 
@@ -235,7 +234,10 @@ public class Dmx_Configurator : MonoBehaviour
 		// }
 
 
-		DMXData[4] = (byte)255;
+		DMXData[4] = (byte)255; // DMX 5
+		DMXData[14] = (byte)255; // DMX 15
+		DMXData[24] = (byte)255; // DMX 25
+
 		
 
 		ArtEngine.SendDMX(0, DMXData, DMXData.Length);

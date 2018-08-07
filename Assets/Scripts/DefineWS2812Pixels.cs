@@ -6,10 +6,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+namespace extOSC.Examples
+{
+
+
 public class DefineWS2812Pixels : MonoBehaviour {
     int debugLights_count;
 	public Dmx_Configurator dmxConfigurator;
-	int dmxStartAddress = 5;
+	int dmxStartAddress = 25;
 	private IEnumerator coroutine_AnimateShapeSlider;
 	public Transform lichterkette_pixels;
 	public RawImage imageToAnalyse;
@@ -17,6 +21,10 @@ public class DefineWS2812Pixels : MonoBehaviour {
 	int textureWidth;
 	int uiLights_count;
 	bool toggleAnimBtn = false;
+	public extOSC.Examples.OSC_send_receive_script oscSender;
+
+	float prevTime;
+	float currentTime;
 	
 
 
@@ -29,7 +37,7 @@ public class DefineWS2812Pixels : MonoBehaviour {
 
    
 	public Slider slider;
-    // float prev_sliderVal, sliderVal = 0;
+    float prev_sliderVal, sliderVal = 0;
 
 
 	public Slider speedslider;
@@ -43,7 +51,9 @@ public class DefineWS2812Pixels : MonoBehaviour {
 		debugLights_count = lichterkette_pixels.childCount;
 		uiLights_count = lichterkette_pixels.GetComponent<Transform>().childCount;
 		print("uiLights_count: " + uiLights_count);
-		// Btn_GetShape1(defaultTexture);   	
+
+		dmxStartAddress = dmxConfigurator.dmxStartAddress_lichterkette;
+		
 	}
 
 	void Start(){
@@ -53,8 +63,22 @@ public class DefineWS2812Pixels : MonoBehaviour {
 	
 	
 	void Update () {
+
+		// prev_sliderVal = sliderVal;
+		// sliderVal = slider.value;
+		// if(sliderVal == prev_sliderVal) return;
+
+		currentTime = Time.time;
+		if((currentTime - prevTime)< 0.3f) return;
+		prevTime = Time.time;
+
 		
 		Texture2D imgTexture = (imageToAnalyse.texture as Texture2D);
+		var oscMessage = new OSCMessage("/1/fader1");
+		// oscMessage.AddValue(OSCValue.Int(4711));
+		// oscMessage.AddValue(OSCValue.Int(4712));
+		// oscMessage.AddValue(OSCValue.Int(4713));
+			
 
 		// for each light
 		for (int i = uiLights_count - 1; i >= 0; i--)
@@ -63,11 +87,25 @@ public class DefineWS2812Pixels : MonoBehaviour {
 					// slider.value: range [o..1] -> * textureWidth: slider range covers the whole width of the image	
 			var pixelColor = imgTexture.GetPixel(Mathf.FloorToInt(( 5f - slider.value * textureWidth +  i * 10f) % textureWidth),Mathf.FloorToInt(2));
 			var lightIntensity = pixelColor.r;
+
+			
 			
             // send value to light
-            dmxConfigurator.DMXData[dmxStartAddress + 3 * i] = (byte)(lightIntensity * masterfader.value * redfader.value * 255);
-			dmxConfigurator.DMXData[dmxStartAddress + 3 * i + 1] = (byte)(lightIntensity * masterfader.value * greenfader.value * 255);
-			dmxConfigurator.DMXData[dmxStartAddress + 3 * i + 2] = (byte)(lightIntensity * masterfader.value * bluefader.value * 255);
+			// 6 weil immer 2 lichter doppelt gelegt werden
+            dmxConfigurator.DMXData[dmxStartAddress + 6 * i] = (byte)(lightIntensity * masterfader.value * redfader.value * 255);
+			oscMessage.AddValue(OSCValue.Int((int)(lightIntensity * masterfader.value * redfader.value * 255)));
+			dmxConfigurator.DMXData[dmxStartAddress + 6 * i + 1] = (byte)(lightIntensity * masterfader.value * greenfader.value * 255);
+			oscMessage.AddValue(OSCValue.Int((int)(lightIntensity * masterfader.value * greenfader.value * 255)));
+			dmxConfigurator.DMXData[dmxStartAddress + 6 * i + 2] = (byte)(lightIntensity * masterfader.value * bluefader.value * 255);
+			oscMessage.AddValue(OSCValue.Int((int)(lightIntensity * masterfader.value * bluefader.value * 255)));
+
+
+			dmxConfigurator.DMXData[dmxStartAddress + 6 * i + 3] = (byte)(lightIntensity * masterfader.value * redfader.value * 255);
+			oscMessage.AddValue(OSCValue.Int((int)(lightIntensity * masterfader.value * redfader.value * 255)));
+			dmxConfigurator.DMXData[dmxStartAddress + 6 * i + 4] = (byte)(lightIntensity * masterfader.value * greenfader.value * 255);
+			oscMessage.AddValue(OSCValue.Int((int)(lightIntensity * masterfader.value * greenfader.value * 255)));
+			dmxConfigurator.DMXData[dmxStartAddress + 6 * i + 5] = (byte)(lightIntensity * masterfader.value * bluefader.value * 255);
+			oscMessage.AddValue(OSCValue.Int((int)(lightIntensity * masterfader.value * bluefader.value * 255)));
 
             // send value to software light
             Color debugLightColor = new Color(
@@ -77,10 +115,15 @@ public class DefineWS2812Pixels : MonoBehaviour {
 				masterfader.value);
 			lichterkette_pixels.GetComponent<Transform>().GetChild(i).GetComponent<Image>().color = debugLightColor;   
 		}
+
+		oscSender._transmitter_lichterkette.Send(oscMessage);
+
 // print(slider.value);
 		if(slider.value == 0f || slider.value == 1f){
 			toggleAnimBtn = false;
 		}
+
+		
 	}
 
 	// UI Button
@@ -128,4 +171,5 @@ public class DefineWS2812Pixels : MonoBehaviour {
 		textureWidth = imageToAnalyse.texture.width;
 		// print("texture width: " + textureWidth);
 	}
+}
 }
