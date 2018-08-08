@@ -1,6 +1,6 @@
-OSXStandalone
+Android
 PlayerPath?
-/Users/janfiess/Documents/Github/Struwwelerror_lightController/builds/Struwwelerror_20180807_1.app
+/Users/janfiess/Documents/Github/Struwwelerror_lightController/builds/Struwwelerror_20180807_2.apk
 SceneListBegin?
 Assets/Scenes/Struwwelerror.unity
 SceneListEnd?

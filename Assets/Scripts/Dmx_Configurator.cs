@@ -55,7 +55,7 @@ public class Dmx_Configurator : MonoBehaviour
 	// public GameObject softwareLight_lichterkette_gui;
 	// float masterfader_lichterkette;
 	public Slider masterfader_lichterkette_ui;
-	[HideInInspector] public int dmxStartAddress_lichterkette = 4;            // DMX 26 -> // DMX Channel - 1
+	[HideInInspector] public int dmxStartAddress_lichterkette = 25;            // DMX 26 -> // DMX Channel - 1
 	// Color prevLed_lichterkette_Color;
 
 
@@ -238,6 +238,7 @@ public class Dmx_Configurator : MonoBehaviour
 		DMXData[4] = (byte)255; // DMX 5
 		DMXData[14] = (byte)255; // DMX 15
 		DMXData[24] = (byte)255; // DMX 25
+		DMXData[6] = (byte)115; // DMX 
 
 		
 
