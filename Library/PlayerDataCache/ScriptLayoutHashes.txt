@@ -1,8 +1,8 @@
 Android
 PlayerPath?
-/Users/janfiess/Documents/Github/Struwwelerror_lightController/builds/Struwwelerror_20180807_2.apk
+/Users/janfiess/Documents/Github/Struwwelerror_lightController/builds/Struwwelerror_20180810.apk
 SceneListBegin?
-Assets/Scenes/Struwwelerror.unity
+Assets/Scenes/Struwwelerror_20180811.unity
 SceneListEnd?
 dafc2856aa462fa42917d604000a86ea Assembly-CSharp.dll:extOSC.Components.Informers.OSCTransmitterInformerRect
 bcec1f076d45b9bcada19cac8f43de76 Assembly-CSharp.dll:extOSC.Components.Events.OSCReceiverEventArray
@@ -127,7 +127,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 392810f2674e1a6a29999b8e8939761d Assembly-CSharp.dll:extOSC.Components.Events.OSCReceiverEventBool
 b1fcf8ee6ea2ba169898873a7d8dc96a Assembly-CSharp.dll:extOSC.Examples.EventsExample
-b620ac39c05117c6d5d90f6f82c1092b Assembly-CSharp.dll:.MenuManager
+456d65b5a75b317be072d19852270b78 Assembly-CSharp.dll:.MenuManager
 322cb40e1e282f28af980cbef7922a90 UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsEventTracker
 dc07d7ad69b399a46e92c483bf1c04ca UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsTracker
 60d0ab3836fb21871acb51753a22c840 Assembly-CSharp.dll:extOSC.Components.ReceiverReflections.OSCReceiverReflectionRect
@@ -151,10 +151,11 @@ dafc2856aa462fa42917d604000a86ea Assembly-CSharp.dll:extOSC.Components.Informers
 809992ecb74e87d02aaadcbed8d02e17 Assembly-CSharp.dll:extOSC.OSCTransmitter
 dafc2856aa462fa42917d604000a86ea Assembly-CSharp.dll:extOSC.Components.Informers.OSCTransmitterInformerQuaternion
 791c4a9502085e12376b96c17523ed3d Assembly-CSharp.dll:extOSC.Components.Events.OSCReceiverEventImpulse
+4d5e65da3e1954fb9c4e81fcda16c86c Assembly-CSharp.dll:.DmxTesterSlider
 dafc2856aa462fa42917d604000a86ea Assembly-CSharp.dll:extOSC.Components.Informers.OSCTransmitterInformerArray
 594e364cbe0c36a954190b6d5b5b99f3 Assembly-CSharp.dll:extOSC.Examples.MappingExample
 60d0ab3836fb21871acb51753a22c840 Assembly-CSharp.dll:extOSC.Components.ReceiverReflections.OSCReceiverReflectionLong
-b138372c502e917305b5af9a0130887d Assembly-CSharp.dll:.Dmx_Configurator
+cf5ae1b5d3d43ca2843b8d0b97b8846a Assembly-CSharp.dll:.Dmx_Configurator
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery

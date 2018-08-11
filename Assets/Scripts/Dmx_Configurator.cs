@@ -66,7 +66,8 @@ public class Dmx_Configurator : MonoBehaviour
 	// public Slider masterfader_toilette_ui;
 	// Color prevLed_toilette_Color;
 
-
+	public MenuManager menuManager;
+	public GameObject panel_dmxTester;
 
 
 
@@ -89,17 +90,17 @@ public class Dmx_Configurator : MonoBehaviour
 
 	// called via GUI Button
 	public void Skypanel1_toggle(){
-		if (masterfader_skypanel1_ui.value <= 0.5f){
+		if (masterfader_skypanel1_ui.value <= 0.03f){
 			StartCoroutine(SmoothValue(masterfader_skypanel1_ui, 1f));
 		} 
-		else if (masterfader_skypanel1_ui.value > 0.5f){
+		else if (masterfader_skypanel1_ui.value > 0.03f){
 			StartCoroutine(SmoothValue(masterfader_skypanel1_ui, 0f));
 		} 
 	}
 
 	// called via GUI Button
 	public void Skypanel2_toggle(){
-		if (masterfader_skypanel2_ui.value <= 0.5f){
+		if (masterfader_skypanel2_ui.value <= 0.03f){
 			StartCoroutine(SmoothValue(masterfader_skypanel2_ui, 1f));
 		} 
 		else if (masterfader_skypanel2_ui.value > 0.5f){
@@ -109,10 +110,10 @@ public class Dmx_Configurator : MonoBehaviour
 
 	// called via GUI Button
 	public void Stripe_toggle(){
-		if (masterfader_stripe_ui.value <= 0.5f){
+		if (masterfader_stripe_ui.value <= 0.03f){
 			StartCoroutine(SmoothValue(masterfader_stripe_ui, 1f));
 		} 
-		else if (masterfader_stripe_ui.value > 0.5f){
+		else if (masterfader_stripe_ui.value > 0.03f){
 			StartCoroutine(SmoothValue(masterfader_stripe_ui, 0f));
 		} 
 	}
@@ -129,10 +130,10 @@ public class Dmx_Configurator : MonoBehaviour
 
 	// called via GUI Button
 	public void Lichterkette_toggle(){
-		if (masterfader_lichterkette_ui.value <= 0.5f){
+		if (masterfader_lichterkette_ui.value <= 0.03f){
 			StartCoroutine(SmoothValue(masterfader_lichterkette_ui, 1f));
 		} 
-		else if (masterfader_lichterkette_ui.value > 0.5f){
+		else if (masterfader_lichterkette_ui.value > 0.03f){
 			StartCoroutine(SmoothValue(masterfader_lichterkette_ui, 0f));
 		} 
 	}
@@ -141,7 +142,7 @@ public class Dmx_Configurator : MonoBehaviour
     {
         float journey = 0f;
 		float origin = slider.value;
-		float duration = 1.0f;
+		float duration = 0.3f;
         while (journey <= duration)
         {
             journey = journey + Time.deltaTime;
@@ -238,9 +239,9 @@ public class Dmx_Configurator : MonoBehaviour
 		DMXData[4] = (byte)255; // DMX 5
 		DMXData[14] = (byte)255; // DMX 15
 		DMXData[24] = (byte)255; // DMX 25
-		DMXData[6] = (byte)115; // DMX 
+		DMXData[6] = (byte)115; // DMX 7
 
-		
+		if(panel_dmxTester == menuManager.activePanel) menuManager.OverrideDmxValues();
 
 		ArtEngine.SendDMX(0, DMXData, DMXData.Length);
 	}

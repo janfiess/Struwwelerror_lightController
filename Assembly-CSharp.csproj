@@ -230,6 +230,7 @@
      <Compile Include="Assets\extOSC\Scripts\UI\OSCSlider.cs" />
      <Compile Include="Assets\Scripts\DefineWS2812Pixels.cs" />
      <Compile Include="Assets\Scripts\Dmx_Configurator.cs" />
+     <Compile Include="Assets\Scripts\DmxTesterSlider.cs" />
      <Compile Include="Assets\Scripts\GetOnePixelFromVideo.cs" />
      <Compile Include="Assets\Scripts\MenuManager.cs" />
      <None Include="Assets\extOSC\versions.txt" />

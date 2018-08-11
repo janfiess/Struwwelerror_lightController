@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Struwwelerror.unity
+- path: Assets/Scenes/Struwwelerror_20180811.unity
   isLoaded: 1
   isActive: 1

@@ -30,6 +30,8 @@ namespace extOSC.Examples
 
         #region Unity Methods
 
+        float toggleRedWhite = 0f;
+
         protected virtual void Start()
         {
             string IP_toilette = ip_textfield_toilette.text;
@@ -66,12 +68,12 @@ namespace extOSC.Examples
 
         public void Toilette_toggle()
         {
-            if (masterfader_toilette_ui.value <= 0.5f)
+            if (masterfader_toilette_ui.value <= 0.03f)
             {
                 // StartCoroutine(SmoothValue(masterfader_toilette_ui, 1f));
                 masterfader_toilette_ui.value = 1f;
             }
-            else if (masterfader_toilette_ui.value > 0.5f)
+            else if (masterfader_toilette_ui.value > 0.03f)
             {
                 // StartCoroutine(SmoothValue(masterfader_toilette_ui, 0f));
                 masterfader_toilette_ui.value = 0f;
@@ -101,7 +103,7 @@ namespace extOSC.Examples
 
 
                 var message = new OSCMessage("/1/driveLight");
-                message.AddValue(OSCValue.Int((int)(color_toilette.r * masterfader_toilette_ui.value * 255)));
+                message.AddValue(OSCValue.Float((float)(color_toilette.r * masterfader_toilette_ui.value)));
 
                 // ));
 
@@ -138,11 +140,14 @@ namespace extOSC.Examples
             if (_transmitter_toilette == null) return;
 
             // Create message
-            var message = new OSCMessage(oscAddress);
+            var message = new OSCMessage("/1/fader2");
             message.AddValue(OSCValue.Float(value));
 
             // Send message
             _transmitter_toilette.Send(message);
+
+
+
         }
 
         // public void SendOscArrayMsg()
@@ -159,5 +164,18 @@ namespace extOSC.Examples
         //     // Send message
         //     _transmitter_lichterkette.Send(message);
         // }
+
+        public void Btn_ToggleRedWhite(){
+            toggleRedWhite += 1;
+            toggleRedWhite %= 2;
+            print(toggleRedWhite);
+            
+            
+            var message = new OSCMessage("/1/fader2");
+            message.AddValue(OSCValue.Float(toggleRedWhite));
+            _transmitter_lichterkette.Send(message);
+        }
     }
+
+    
 }
